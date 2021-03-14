@@ -1,0 +1,169 @@
+/*
+ *                      面向对象（下）
+ *一：static 关键字的使用
+ *1.static可以用来修饰：属性，方法，代码块，内部类。
+ *①：使用static修饰属性:静态变量
+ *	属性:按是否使用static修饰，又分为：静态属性vs非静态属性（实例变量）
+ *	实例变量：我们创建了多个对象，每个对象都独立的拥有一套类中的非静态属性。
+ *  静态变量：我们创建了类的对象，多个对象公用同一个静态变量。当通过某一对象修改静态变量时
+ *  会导致其他调用此静态变量时，是修改过的。
+ *  （a.静态变量随着类的加载而加载,可以通过"类.静态变量"的方式进行调用
+ *	  b.静态变量的加载早于对象的创建
+ *	  c.由于类只加载一次，则静态变量在内存中也只会存在一份，存在方法区的静态域中；）
+ *②：使用static修饰方法:修饰方法
+ *a.随着类的加载而加载，可以通过"类.静态方法"来调用。
+ *b.静态方法中只能调用静态的方法或属性
+ *  非静态方法中既可以调用静态，也可以调用非静态。
+ *  ② main方法
+ *  1.main()作为程序的入口
+ *  2.main()方法也是一个普通的静态方法
+ *  3.main()方法可以作为与控制台交互的方式，
+ *  二:面向对象代码块
+ *  1.用来初始话类。对象
+ *  2.代码块只能用static修饰，
+ *  3.静态代码块，和非静态代码块
+ *  4.静态代码块，随着类的加载而执行，只能执行一次。
+ *  三：final关键字
+ *  1.final可以用来修饰结构，类，属性，方法。
+ *  2.final修饰一个类:不能被其他类继承
+ *  比如:String类,System类，StringBuffer类
+ *  3.final修饰一个方法：此方法不可以被重写
+ *  比如：Object类getClass（）；
+ *  4.final修饰变量，此时的变量就是常量
+ *  ①：final修饰属性：代码块中初始化，显示初始化，构造器中初始化。
+ *  5final修饰局部变量
+ *  四 抽象类与抽象方法
+ *  1.abstract可以用来修饰类
+ *  ①:此类不能实例化
+ *  ②:抽象类中一定有构造器，便于子类实例化时调用。
+ *  ③：开发时，都会提供抽象类的子类，让子类实例化
+ *  2.abstract修饰方法，
+ *  ① 抽象方法只有方法的声明，没有方法体
+ *  ②包含抽象方法的类，一定是一个抽象类，反之抽象类中可以没有抽象方法。
+ *  ③若子类重写了父类中所有抽象方法后，此子类方可实例化
+ *  若子类没有重写父类中所有抽象方法，则子类还是抽象类I（间接父类也算）
+ *  3. abstract使用上的注意点
+ *  ①.abstract不能用来修饰属性，构造器
+ *  五：接口
+ *  1.接口的使用interface来定义
+ *  2.Java中，接口和类时并列的两个结构
+ *  3.如何定义接口
+ *  ①JDK7及以前，只能定义全局变量和抽象方法
+ *  --->public static final   但是书写时，可以省略不写
+ *  //全局变量
+		public static final int MAX_SPEED=7900;
+		int MINSPEED=1//省略了public static final
+		//抽象方法
+		public abstract void fly();
+		void stop;//省略了public abstract
+ *  --->public abstract
+ *  ②JDK8：除了定义全局变量和抽象方法之外，和可以定义静态方法，默认方法
+ *  4.接口中不能定义构造器！意味着接口不能实例化
+ *  5.java的开发中，接口都通过让类去实现（implements）的方式去使用
+ *  如果实现类覆盖了接口中所有抽象方法，则此类可以实例化
+ *  如果没有实现接口有中的所有抽象方法，则此类不可以实例化
+ *  6.java类可以实现多个接口，---->弥补了Java单继承性的局限
+ *  格式： class AA extends BB implements CC,DD,EE
+ *  7.接口与接口之间可以继承，可以多继承。
+ *  8.接口具体的使用（体现多态性）
+ *  9.接口实际上是一种规范
+ *  package practice;
+
+class Test4{
+	 }
+class Plane implements Flyable{
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
+interface Flyable{
+	//全局变量
+	int MINSPEED=1;//省略了public static final
+	//抽象方法
+	void stop();//省略了public abstract
+}
+interface Attackable{
+	void attack();
+}
+class Bullet extends Object implements Flyable,Attackable{
+	
+}
+package practice;
+
+public class Mankind {
+	private int sex;
+	private int salary;
+	public Mankind(){
+	}
+	public Mankind(int sex,int salary) {
+		this.sex=sex;
+		this.salary=salary;
+	}
+	public void manOrWomen() {
+		if(sex==1)
+		{
+			System.out.println("man");
+		}
+		else if(sex==0)
+		{
+			System.out.println("women");
+		}
+	}
+	public void employeed()
+	{
+		if(salary==0)
+			System.out.println("no job");
+		else
+			System.out.println("job");
+		}
+	public void setsex(int sex) {
+		this.sex=sex;
+	}
+	public int getsex() {
+		return sex;
+	}
+	public void setsalary(int salary) {
+		this.salary=salary;
+	}
+	public int getsalary() {
+		return salary;
+	}
+}
+package practice;
+
+public class Kinds extends Mankind {
+	public static void main(String[] args) {
+		Chinese c1=new Chinese();
+		c1.age=40;
+		c1.name="姚明";
+		Chinese c2=new Chinese();
+		c2.name="马龙";
+		c2.age=30;
+		c1.nation="dad";
+		System.out.println("c2.nation");
+	}
+	
+}
+class Chinese{
+	String name;
+	int age;
+	static String nation;
+}
+package practice;
+
+import java.util.Scanner;
+import java.util.Vector;
+
+public class ScoreTEst {
+	public static void main(String[] args) {		    
+	int[] a=new int[] {7,6,4,3,1};
+	Test4 b=new Test4();
+	b.rotate(a, 3);
+	}
+	}
+
+ */ 
